@@ -1,0 +1,61 @@
+server:
+  port: 8080
+  address: 0.0.0.0
+eureka:
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl.defaultZone: http://localhost:8761/eureka/
+  instance:
+    prefer-ip-address: true
+    lease-renewal-interval-in-seconds: 1
+    lease-expiration-duration-in-seconds: 1
+spring:
+  application:
+    name: gateway-service
+  cloud:
+    gateway:
+      globalcors:
+        cors-configurations:
+          '[\**]':
+            allowCredentials: true
+            maxAge: 3600
+            allowedOrigins:
+              - "localhost:5500"
+            allowedHeaders: "*"
+            allowedMethods: "*"
+            allowedOriginPatterns: "*"
+      routes:
+        - id: MARK_SERVICE
+          uri: lb://mark-service
+          predicates:
+            - Path=/mark/**
+        - id: STUDENT-API
+          uri: lb://student-api
+          predicates:
+            - Path=/student/**
+        - id: ADVERT-SERVICE
+          uri: lb://advert-service
+          predicates:
+            - Path=/advert/**
+        - id: ORDER-SERVICE
+          uri: lb://order-service
+          predicates:
+            - Path=/order/**
+        - id: PDF-GENERATOR
+          uri: lb://pdf-generator
+          predicates:
+            - Path=/pdf/**
+        - id: REGISTER-SERVICE
+          uri: lb://register-service
+          predicates:
+            - Path=/register/**
+        - id: AUTHORIZATION-SERVER
+          uri: lb://authorization-server
+          predicates:
+            - Path=/oauth/**
+        - id: AUTHENTICATION-SERVICE
+          uri: lb://authentication-service
+          predicates:
+            - Path=/auth/**
+

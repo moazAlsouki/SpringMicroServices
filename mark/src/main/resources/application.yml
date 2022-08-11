@@ -1,0 +1,35 @@
+server:
+  port: 8011
+  address: 0.0.0.0
+spring:
+  application:
+    name: mark-service
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3344/markdb?createDatabaseIfNotExist=true
+    username: root
+    password:
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+hibernate:
+  dialect:
+    storage_engine: innodb
+gateway:
+  port: 8080
+  address: localhost
+
+eureka:
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl.defaultZone: http://127.0.0.1:8761/eureka/
+  instance:
+    prefer-ip-address: true
+    lease-renewal-interval-in-seconds: 1
+    lease-expiration-duration-in-seconds: 1
